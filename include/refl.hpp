@@ -4359,7 +4359,7 @@ namespace refl::detail
  */
 #define REFL_FIELD(FieldName_, ...) \
     REFL_DETAIL_MEMBER_HEADER { \
-        REFL_DETAIL_MEMBER_COMMON(field, FieldName_, __VA_ARGS__) \
+        REFL_DETAIL_MEMBER_COMMON(field, FieldName_, __VA_OPT__(__VA_ARGS__)) \
     public: \
         typedef decltype(type::FieldName_) value_type; \
         static constexpr auto pointer{ &type::FieldName_ }; \
@@ -4768,16 +4768,16 @@ REFL_END
 
 #define REFL_DETAIL_EX_1_type(...) REFL_DETAIL_EX_EXPAND(REFL_DETAIL_EX_DEFER(REFL_TYPE)(__VA_ARGS__))
 #define REFL_DETAIL_EX_1_template(...) REFL_DETAIL_EX_EXPAND(REFL_DETAIL_EX_DEFER(REFL_TEMPLATE)(__VA_ARGS__))
-#define REFL_DETAIL_EX_1_field(...) REFL_DETAIL_EX_EXPAND(REFL_DETAIL_EX_DEFER(REFL_FIELD)(__VA_ARGS__))
+#define REFL_DETAIL_EX_1_field(...) REFL_DETAIL_EX_EXPAND(REFL_DETAIL_EX_DEFER(REFL_FIELD)(__VA_OPT__(__VA_ARGS__)))
 #define REFL_DETAIL_EX_1_func(...) REFL_DETAIL_EX_EXPAND(REFL_DETAIL_EX_DEFER(REFL_FUNC)(__VA_ARGS__))
 
 #endif // __INTELLISENSE__
 
-#define REFL_DETAIL_EX_(Specifier, ...) REFL_DETAIL_EX_1_##Specifier __VA_ARGS__
+#define REFL_DETAIL_EX_(Specifier, ...) REFL_DETAIL_EX_1_##Specifier __VA_OPT__(__VA_ARGS__)
 
 #define REFL_DETAIL_EX_EMPTY()
 #define REFL_DETAIL_EX_DEFER(Id) Id REFL_DETAIL_EX_EMPTY()
-#define REFL_DETAIL_EX_EXPAND(...)  __VA_ARGS__
+#define REFL_DETAIL_EX_EXPAND(...)  __VA_OPT__(__VA_ARGS__)
 
 #define REFL_DETAIL_EX_END() REFL_END
 
